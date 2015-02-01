@@ -1,0 +1,25 @@
+Any program has same difference:
+1. Linux usage description is isolated function inside C file. NetBSD only offers basic usage and use man instead.
+
+Program I: date.c
+
+Common:
+1. Both of them are able to output different date format.
+2. Both of them outputs are same when there is no any option.
+
+Difference:
+1. Linux error handler inside main function, but NetBSD has separate function.
+2. Linux can accept --date option like '1 days ago', but NetBSD accept option like -v -1y(+1d).
+3. Linux accept different date standard and use struct to defined long options, like iso-8601 or rfc-822. But NetBSD doesn't.
+
+Program II: echo.c
+
+Common:
+1.Both of them are able to output message.
+2.Both of them offers option to don't output newline.
+
+Difference:
+1. Linux offers options -e to enable interpretation of backslash escapes and -E to disable interpretation of backslash escapes, 
+but NetBSD default to disable interpretation of backslash escapes, and doesn't offer any options.
+2. Linux use fputs(argv[0], stdout) function to output result, but NetBSD use fflush(stdout);
+
