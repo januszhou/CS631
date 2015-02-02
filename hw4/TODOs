@@ -1,0 +1,74 @@
+Adding this file to coordinate work, track progress and highlight any roadblocks/challenges.
+
+Project Tasks
+
+1. Daemonize the server.
+2. Parse the HTTP client request and generate the response.
+  - validate and parse the HTTP GET and generate the appropriate response.
+  - similar thing for HEAD request. 
+
+3. Start logging all the requests to the given file.
+
+4. CGI implementation
+
+5. Debugging mode - server will not daemonize and serve one request at a time. All the logs will be
+printed on stdout.
+
+ 
+Current Work
+Sonal:
+bug fixes and testing(pending items)
+  a. Big file testing
+  b. use gai_strerror
+  c. break comments at 80 chars for readability.
+
+Janus:
+1, 5 - debugging, logging and daemonize
+
+
+Completed Tasks
+Sonal:
+
+1. Fork a handler process for every client request.
+2. Parse a GET request and read the requested file.
+3. Generate OK or 404 error.
+4. Sending the file with OK response.
+5. Support for GET and HEAD request with approriate status code and other header details mentioned in specification.
+6. Support for Directory Indexing, when index.html in directory is not found.
+7. Generated directory index in alphanumeric order.
+8. Fixed the shortcomings of HW#3.
+9. Support for determining correct content-type for the file using magic(5).
+10.HTTP request validation is done. It also includes restriction where - get/head file request is not allowed 
+outside document root directory. 
+11.User Directories feature is supported.
+12. CGI implementation.
+13. Bug fixes from professor's feedback
+  a. timeout of idle connections.
+  b. handle a file you don't have read permissions for
+  c. HEAD request on directory should not yield index 
+  d. For error statuses Content-length: 0 but there is content following.
+  e. Error message on unsuccessful start
+  f. better makefile design
+  g. redundant #else in magic_utils.c
+  h. handle write(2) failure appropriately
+  i. Use getpwent and use the pw_dir to determine home directory.
+  j. Handle HEAD request for CGI correctly.
+  k. Big file testing   
+      use pipewithprogress.c in the middle to confirm size of output
+
+Janus:
+1. create new logfd in swsoption for handle log file
+2. move logging function to sendHeader and sendOKHeader function, so we don't needs to worry about anywhere else, because we needs to send header anyway
+3. adding content and request query into log struct, so the log file will get more details.
+4. finish log request when user post to CGI.
+5. deamonize program, any message won't show up on console except use -d
+6. 
+
+
+
+
+Questions
+1. about the sendHeader and sendOKHeader, so it's only two choice, either ok or error, is that right? so i don't needs to logging everywhere, within those two function, i can pass log pointer, and save in there. 
+==> We also need to add the same to the handle_cgi function i think, because CGI is handled very differently.
+also we need to respect the -d flag (it is being read in main but the logging framework should use it (see man ./sws.1)
+ 

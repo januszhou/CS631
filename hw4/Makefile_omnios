@@ -1,0 +1,29 @@
+all: hello
+
+hello: main.o net.o util.o magic_utils.o http.o cgi.o mkdirs
+	gcc -Wall  build/main.o build/net.o build/util.o build/magic_utils.o build/http.o build/cgi.o -o bin/sws -lnsl -lsocket
+
+main.o: src/main.c mkdirs
+	gcc -Wall -c src/main.c -o build/main.o
+
+net.o: src/net.c mkdirs
+	gcc -Wall -c  src/net.c -o build/net.o
+
+util.o: src/util.c mkdirs
+	gcc -Wall -c src/util.c -o build/util.o
+
+magic_utils.o: src/magic_utils.c mkdirs
+	gcc -Wall -c src/magic_utils.c -o build/magic_utils.o
+
+http.o: src/http.c mkdirs
+	gcc -Wall -c src/http.c -o build/http.o
+
+cgi.o: src/cgi.c mkdirs
+	gcc -Wall -c src/cgi.c -o build/cgi.o
+clean:
+	rm -rf build/*.o bin/sws
+
+mkdirs:
+	mkdir -p build
+	mkdir -p bin
+
